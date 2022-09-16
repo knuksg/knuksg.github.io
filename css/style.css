@@ -1,0 +1,12 @@
+.main-section {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.up-arrow {
+  right: 0rem;
+  bottom: 0rem;
+  font-size: 3rem;
+}
