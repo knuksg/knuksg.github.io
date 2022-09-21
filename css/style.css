@@ -19,15 +19,20 @@
   border-radius: 50px;
   padding: 1rem;
   margin: 1rem;
+  max-width: 100%;
 }
 
 .ball {
-  width: 5rem;
-  height: 5rem;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
   margin: 0.5rem;
   font-size: 2rem;
   font-weight: bold;
   text-align: center;
-  line-height: 5rem;
+  line-height: 4rem;
+}
+
+.result-list {
+  width: 100%;
 }
