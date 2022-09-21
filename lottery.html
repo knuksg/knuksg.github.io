@@ -28,6 +28,7 @@
     <main class="container my-5 text-center">
       <h1>1034회차 로또 번호</h1>
       <h5 class="text-secondary">1033회차 1등 당첨 금액: 1,900,000,000원(19억원)</h5>
+      <a href="https://dhlottery.co.kr/gameInfo.do?method=buyLotto&wiselog=C_A_1_3">로또 구입하기</a>
       <div class="mt-3">
         <p class="m-0">자동 번호 개수</p>
         <select id="number-list" onchange="OnChange()">
@@ -39,7 +40,18 @@
           <option value="6" selected="selected">6(기본)</option>
         </select>
       </div>
+      <div class="mt-3">
+        <p class="m-0">구매 개수</p>
+        <select id="buy-list" onchange="buyOnChange()">
+          <option value="1" selected="selected">1(기본)</option>
+          <option value="3">3</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="100">100</option>
+        </select>
+      </div>
       <button id="lottery-btn" type="button" class="btn btn-primary my-3">번호 생성</button>
+      <button id="lottery-delete-btn" type="button" class="btn btn-primary my-3">번호 제거</button>
       <div id="result" class="d-flex flex-column align-items-center"></div>
     </main>
     <footer>
@@ -57,39 +69,50 @@
         number = document.querySelector("#number-list").options[document.querySelector("#number-list").selectedIndex].value;
       }
 
+      var buyNumber = 1;
+
+      function buyOnChange() {
+        buyNumber = document.querySelector("#buy-list").options[document.querySelector("#buy-list").selectedIndex].value;
+      }
+
       const lotteryBtn = document.querySelector("#lottery-btn");
       lotteryBtn.addEventListener("click", function () {
-        // 몇 개를 선택할지 결정
-
-        // ballList
-        const ballList = document.createElement("div");
-        ballList.classList.add("ball-list");
-        // numbers
-        const numbers = _.sampleSize(_.range(1, 46), number);
-        // 정렬하고 로그로 보여주기
-        console.log(numbers.sort((a, b) => a - b));
-        // ball
-        for (const idx of _.range(number)) {
-          const ball = document.createElement("div");
-          ball.classList.add("ball");
-          ball.innerText = numbers[idx];
-          if (ball.innerText < 11) {
-            ball.style.backgroundColor = "#ffeb3b";
-          } else if (ball.innerText < 21) {
-            ball.style.backgroundColor = "blue";
-          } else if (ball.innerText < 31) {
-            ball.style.backgroundColor = "red";
-          } else if (ball.innerText < 41) {
-            ball.style.backgroundColor = "black";
-          } else {
-            ball.style.backgroundColor = "green";
+        for (const i of _.range(buyNumber)) {
+          // ballList
+          const ballList = document.createElement("div");
+          ballList.classList.add("ball-list");
+          // numbers
+          const numbers = _.sampleSize(_.range(1, 46), number);
+          // 정렬하고 로그로 보여주기
+          console.log(numbers.sort((a, b) => a - b));
+          // ball
+          for (const idx of _.range(number)) {
+            const ball = document.createElement("div");
+            ball.classList.add("ball");
+            ball.innerText = numbers[idx];
+            if (ball.innerText < 11) {
+              ball.style.backgroundColor = "#ffeb3b";
+            } else if (ball.innerText < 21) {
+              ball.style.backgroundColor = "blue";
+            } else if (ball.innerText < 31) {
+              ball.style.backgroundColor = "red";
+            } else if (ball.innerText < 41) {
+              ball.style.backgroundColor = "black";
+            } else {
+              ball.style.backgroundColor = "green";
+            }
+            ball.style.color = "white";
+            ballList.appendChild(ball);
           }
-          ball.style.color = "white";
-          ballList.appendChild(ball);
+          // 결과에 넣기
+          const result = document.querySelector("#result");
+          // 제일 첫 번째에 넣기
+          result.insertBefore(ballList, result.firstChild);
         }
-        // 결과에 넣기
-        const result = document.querySelector("#result");
-        result.appendChild(ballList);
+      });
+      const lotteryDeleteBtn = document.querySelector("#lottery-delete-btn");
+      lotteryDeleteBtn.addEventListener("click", function () {
+        result.innerHTML = null;
       });
     </script>
 
